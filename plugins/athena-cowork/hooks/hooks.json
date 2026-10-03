@@ -1,0 +1,68 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "mcp_tool",
+            "server": "plugin:athena-cowork:athena-local",
+            "tool": "athena_log_event",
+            "input": {
+              "actor": "user",
+              "actionType": "prompt_submit",
+              "sessionId": "${session_id}",
+              "payload": {
+                "text": "${prompt}",
+                "captureMethod": "hook-mediated"
+              },
+              "quiet": true
+            },
+            "timeout": 8
+          },
+          {
+            "type": "mcp_tool",
+            "server": "plugin:athena-cowork:athena-local",
+            "tool": "athena_get_rules",
+            "input": {
+              "query": "${prompt}",
+              "sessionId": "${session_id}"
+            },
+            "timeout": 8
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh \"${CLAUDE_PLUGIN_ROOT}/scripts/cloud-capture.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "mcp_tool",
+            "server": "plugin:athena-cowork:athena-local",
+            "tool": "athena_log_event",
+            "input": {
+              "actor": "agent",
+              "actionType": "agent_output",
+              "sessionId": "${session_id}",
+              "payload": {
+                "text": "${last_assistant_message}",
+                "reason": "${reason}",
+                "captureMethod": "hook-mediated"
+              },
+              "quiet": true
+            },
+            "timeout": 8
+          }
+        ]
+      }
+    ]
+  }
+}

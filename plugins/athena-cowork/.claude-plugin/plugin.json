@@ -1,0 +1,10 @@
+{
+  "name": "athena-cowork",
+  "version": "0.1.8",
+  "description": "Local Cowork integration for the running Athena daemon.",
+  "author": {
+    "name": "Athena"
+  },
+  "runtimeTarget": "darwin-arm64",
+  "mcpServers": "./athena-local.mcpb"
+}

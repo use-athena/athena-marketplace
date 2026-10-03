@@ -1,0 +1,17 @@
+{
+  "name": "athena",
+  "owner": {
+    "name": "Athena"
+  },
+  "metadata": {
+    "description": "Athena plugins for Claude Cowork."
+  },
+  "plugins": [
+    {
+      "name": "athena-cowork",
+      "source": "./plugins/athena-cowork",
+      "description": "Lets Athena learn from your Cowork tasks and bring back what it has learned.",
+      "version": "0.1.8"
+    }
+  ]
+}
