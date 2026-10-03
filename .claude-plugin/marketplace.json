@@ -11,7 +11,7 @@
       "name": "athena-cowork",
       "source": "./plugins/athena-cowork",
       "description": "Lets Athena learn from your Cowork tasks and bring back what it has learned.",
-      "version": "0.1.8"
+      "version": "0.1.9"
     }
   ]
 }
