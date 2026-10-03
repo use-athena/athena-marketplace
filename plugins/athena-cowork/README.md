@@ -1,25 +1,24 @@
 # Athena Cowork plugin
 
-This package connects local Cowork to the one Athena daemon already running on the host. The connector uses a local MCPB and bounded lifecycle hooks; it does not start a second daemon, import Athena internals, run formation, or expose the daemon on a network interface.
+This package connects Cowork to the one Athena daemon already running on the host. It contains a local MCPB server and one command hook; it does not start a second daemon, import Athena internals, run formation, or expose the daemon on a network interface.
 
-## Install locally
+## Install
 
-Install and start the current Athena macOS app in `Applications`, then in Claude use **Customize > Plugins > Add > Upload plugin** and choose the supplied `athena-cowork.plugin.zip`. The plugin registers `UserPromptSubmit` and `Stop` `mcp_tool` hooks against the bundled local MCP server; Claude Code dispatches them, but live cloud Cowork tasks on 2026-09-30 did not, under either the plugin-scoped or the bridged `remote-devices` server name. For cloud Cowork, a POSIX `sh` command hook (`scripts/cloud-capture.sh`) adds a turn-capture note on Linux, and Claude relays each turn through the bridged `athena_capture_turn` tool, which returns Athena's guidance for that message. A turn whose capture Claude skips is recovered on the next captured turn. This is hook-prompted, model-relayed capture, and the owner approves the tool on first use. It is not guaranteed passive capture. The MCPB uses Claude Desktop's own Node, so the plugin ships no runtime. The package deliberately does not use a `SessionStart` MCP hook because Anthropic documents that event as firing before MCP servers are necessarily connected.
+Install and start the current Athena macOS app in `Applications`. Athena's setup opens Claude's install dialog for this plugin from the public `use-athena/athena-marketplace` repository; choose **Install**. As a fallback, in Claude use **Customize > Plugins > Add > Upload plugin** and choose the supplied `athena-cowork.plugin.zip`. Athena only sees Cowork tasks started with a folder selected (any folder); tasks without one get neither its tools nor its turn-capture note.
 
-Developers build the ZIP from `connectors/cowork` with `npm ci` and `npm run build`. Users install the ZIP bundled with the Rust Athena app without building it. A desktop Cowork task can call this host-local MCP connector even while its agent task runs in the cloud, as the live status and write calls showed. A successful health check or an installed plugin does not prove automatic capture.
+Developers build the ZIP from `connectors/cowork` with `npm ci` and `npm run build`; `npm run build -- --marketplace-dir <dir>` also writes the marketplace repository layout to publish. Users install the ZIP bundled with the Athena app without building it.
+
+## How capture works
+
+Claude Desktop runs the MCPB server on the host with the system Node or its own, so the plugin ships no runtime, and a cloud Cowork task can call it. Cloud Cowork runs the plugin's `UserPromptSubmit` command hook (`scripts/cloud-capture.sh`, POSIX `sh`) in a Linux container that cannot reach the daemon, so the hook adds a turn-capture note and Claude relays the turn through the bridged `athena_capture_turn` tool, which returns Athena's guidance for that message. A turn whose capture Claude skips is recovered on the next captured turn. On macOS the hook stays silent, since Athena's own hooks capture Claude Code. This is hook-prompted, model-relayed capture that the owner approves on first use, not guaranteed passive capture; a health check or an installed plugin does not prove it.
 
 ## Privacy and provenance
 
-- Requests go only to `http://127.0.0.1:4173` by default. `ATHENA_PORT` is an optional developer override for the numeric local port only.
+- Requests go only to `http://127.0.0.1:4173`, or the numeric port in `ATHENA_PORT`.
 - No credentials, tokens, redirects, arbitrary URLs, arbitrary shell commands, or external network endpoints are accepted by the connector.
-- The hook records only bounded prompt/session/assistant lifecycle fields and asks for guidance using the current prompt. Prompt text is sent to the local daemon when a prompt is submitted; it is not read from transcripts or arbitrary files.
-- Native MCP hook events and explicit MCP calls use source `cowork-plugin` and app `claude`. Hook-generated events carry `captureMethod=hook-mediated`; paired corrections recorded by the skill carry `captureMethod=model-mediated`. These values describe the plugin integration origin and capture path; they do not prove that the session is local.
-- A correction is classified only when a heuristic candidate trigger is followed by concrete replacement/instruction content and the same session has prior agent activity. Approval, silence, and bare rejections such as `No, seriously` or `not what I wanted` are not evidence of a correction; concrete instructions such as `Don't merge this PR until I explicitly approve` may be.
-- Stop capture preserves bounded `last_assistant_message` as `payload.text` and an optional reason. The connector does not capture tool output. In cloud Cowork, each relayed turn also carries the owner's previous message, so a turn whose capture Claude skipped is recorded on the next one; its own preceding reply is not recovered.
-- Formation still uses the separately configured existing provider. This plugin does not grant background access to a desktop subscription or configure a provider.
+- Events use source `cowork-plugin` and app `claude`. Relayed turns carry `captureMethod=hook-prompted`; a correction logged through `athena_log_event` with the preceding reply carries `captureMethod=model-mediated`. These values describe the plugin and capture path; they do not prove that the session is local.
+- A relayed message is classified as a correction only when a heuristic candidate trigger is followed by concrete replacement or instruction content, after a reply. Approval, silence, and bare rejections such as `No, seriously` or `not what I wanted` are not evidence of a correction; concrete instructions such as `Don't merge this PR until I explicitly approve` may be.
+- The connector records the message texts Claude relays, not tool output, transcripts, or files. Each relayed turn also carries the owner's previous message, so a turn whose capture Claude skipped is recorded on the next one; its own preceding reply is not recovered.
+- Formation still uses the separately configured provider. This plugin does not grant background access to a desktop subscription or configure a provider.
 
-## Limitations
-
-This is a Cowork MCP connector. An explicit tool call from a desktop Cowork task reached the host-local daemon, but the same task's lifecycle hooks produced no events. A shell hook in Cowork's Linux code VM cannot use the host's macOS binary or reach host loopback directly; the local MCP connector runs on the host and can. A health check does not prove prompt or correction capture. Activate the Athena skill and use its paired `athena_log_event` instruction; the skill records exact messages only after the tool succeeds. This plugin does not silently change daemon binding or expose it over a network.
-
-The plugin archive retains the plugin `LICENSES/DEPENDENCIES.md` notices for the bundled SDK, schema, and validation dependencies.
+The plugin archive retains `LICENSES/DEPENDENCIES.md` notices for the bundled SDK, schema, and validation dependencies.
