@@ -1,6 +1,6 @@
 {
   "name": "athena-cowork",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Local Cowork integration for the running Athena daemon.",
   "author": {
     "name": "Athena"
