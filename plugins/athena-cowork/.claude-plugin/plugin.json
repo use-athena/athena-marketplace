@@ -1,9 +1,12 @@
 {
   "name": "athena-cowork",
-  "version": "0.2.1",
-  "description": "Local Cowork integration for the running Athena daemon.",
+  "version": "0.2.2",
+  "description": "Local Cowork integration for the running Imprint daemon.",
   "author": {
-    "name": "Athena"
+    "name": "Imprint"
   },
-  "mcpServers": "./athena-local.mcpb"
+  "mcpServers": "./athena-local.mcpb",
+  "displayName": "Imprint",
+  "icon": "./assets/icon.png",
+  "homepage": "https://imprintsystems.ai"
 }

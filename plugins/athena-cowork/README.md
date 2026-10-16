@@ -1,16 +1,16 @@
-# Athena Cowork plugin
+# Imprint Cowork plugin
 
-This package connects Cowork to the one Athena daemon already running on the host. It contains a local MCPB server and one command hook; it does not start a second daemon, import Athena internals, run formation, or expose the daemon on a network interface.
+This package connects Cowork to the one Imprint daemon already running on the host. It contains a local MCPB server and one command hook; it does not start a second daemon, import Imprint internals, run formation, or expose the daemon on a network interface.
 
 ## Install
 
-Install and start the current Athena macOS app in `Applications`. Athena's setup opens Claude's install dialog for this plugin from the public `use-athena/athena-marketplace` repository; choose **Install**. As a fallback, in Claude use **Customize > Plugins > Add > Upload plugin** and choose the supplied `athena-cowork.plugin.zip`. Cowork can use Athena with or without a folder, inside or outside a project. Athena’s tools may be deferred: the turn-capture note asks Claude to find them with ToolSearch before recording. If no event arrives, use the task’s + menu > Plugins > Athena cowork > athena, then ask Claude to check Athena’s connection and follow the turn-capture instructions. In the October 5 live tests, Sonnet captured fresh no-folder tasks on the first turn; Haiku skipped some first turns, including one with Athena’s skill selected, and needed an explicit connection check. Do not promise automatic recording in every task. A successful status check alone does not prove capture.
+Install and start the current Imprint macOS app in `Applications`. Imprint's setup opens Claude's install dialog for this plugin from the public `use-athena/athena-marketplace` repository; choose **Install**. As a fallback, in Claude use **Customize > Plugins > Add > Upload plugin** and choose the supplied `athena-cowork.plugin.zip`. Cowork can use Imprint with or without a folder, inside or outside a project. Imprint’s tools may be deferred: the turn-capture note asks Claude to find them with ToolSearch before recording. If no event arrives, use the task’s + menu > Plugins > Imprint > athena, then ask Claude to check Imprint’s connection and follow the turn-capture instructions. In the October 5 live tests, Sonnet captured fresh no-folder tasks on the first turn; Haiku skipped some first turns, including one with Imprint’s skill selected, and needed an explicit connection check. Do not promise automatic recording in every task. A successful status check alone does not prove capture.
 
-Developers build the ZIP from `connectors/cowork` with `npm ci` and `npm run build`; `npm run build -- --marketplace-dir <dir>` also writes the marketplace repository layout to publish. Users install the ZIP bundled with the Athena app without building it.
+Developers build the ZIP from `connectors/cowork` with `npm ci` and `npm run build`; `npm run build -- --marketplace-dir <dir>` also writes the marketplace repository layout to publish. Users install the ZIP bundled with the Imprint app without building it.
 
 ## How capture works
 
-Claude Desktop runs the MCPB server on the host with the system Node or its own, so the plugin ships no runtime, and a cloud Cowork task can call it. Cloud Cowork runs the plugin's `UserPromptSubmit` command hook (`scripts/cloud-capture.sh`, POSIX `sh`) in a Linux container that cannot reach the daemon, so the hook adds a turn-capture note and Claude relays the turn through the bridged `athena_capture_turn` tool, which returns Athena's guidance for that message. A turn whose capture Claude skips is recovered on the next captured turn. On macOS the hook stays silent, since Athena's own hooks capture Claude Code. This is hook-prompted, model-relayed capture that the owner approves on first use, not guaranteed passive capture; a health check or an installed plugin does not prove it.
+Claude Desktop runs the MCPB server on the host with the system Node or its own, so the plugin ships no runtime, and a cloud Cowork task can call it. Cloud Cowork runs the plugin's `UserPromptSubmit` command hook (`scripts/cloud-capture.sh`, POSIX `sh`) in a Linux container that cannot reach the daemon, so the hook adds a turn-capture note and Claude relays the turn through the bridged `athena_capture_turn` tool, which returns Imprint's guidance for that message. A turn whose capture Claude skips is recovered on the next captured turn. On macOS the hook stays silent, since Imprint's own hooks capture Claude Code. This is hook-prompted, model-relayed capture that the owner approves on first use, not guaranteed passive capture; a health check or an installed plugin does not prove it.
 
 ## Privacy and provenance
 
@@ -22,3 +22,9 @@ Claude Desktop runs the MCPB server on the host with the system Node or its own,
 - Formation still uses the separately configured provider. This plugin does not grant background access to a desktop subscription or configure a provider.
 
 The plugin archive retains `LICENSES/DEPENDENCIES.md` notices for the bundled SDK, schema, and validation dependencies.
+
+## Brand assets and stable IDs
+
+The visible product name is Imprint; the lowercase italic logo and fingerprint are the same approved artwork as the app and website. `assets/logo.svg` is the full lockup; `assets/icon.png` is the connector icon. The plugin and MCPB declare these assets for clients that support them.
+
+Existing plugin, marketplace, skill, tool, environment and archive identifiers remain `athena` for connection compatibility. The marketplace install command remains `/plugin install athena-cowork --marketplace use-athena/athena-marketplace`; publishing this rebrand requires approval first.

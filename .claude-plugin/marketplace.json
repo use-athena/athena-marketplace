@@ -1,16 +1,17 @@
 {
   "name": "athena",
   "owner": {
-    "name": "Athena"
+    "name": "Imprint"
   },
   "metadata": {
-    "description": "Athena plugins for Claude Cowork."
+    "description": "Imprint plugins for Claude Cowork."
   },
   "plugins": [
     {
       "name": "athena-cowork",
+      "displayName": "Imprint",
       "source": "./plugins/athena-cowork",
-      "description": "Lets Athena learn from your Cowork tasks and bring back what it has learned."
+      "description": "Lets Imprint learn from your Cowork tasks and bring back what it has learned."
     }
   ]
 }

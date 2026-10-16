@@ -1,17 +1,15 @@
-# Athena plugin marketplace
+# Imprint plugin marketplace
 
-The Athena Cowork plugin connects Claude Cowork to the Athena app running on your Mac. It uses Athena's local port, 4173.
+The Imprint plugin connects Claude to the Imprint app running on your Mac, using local port 4173. It works with or without a selected folder or project.
 
-In Claude Desktop's Cowork tab, open **Customize > Plugins > Add > Add marketplace**, add `use-athena/athena-marketplace`, then install and enable **Athena cowork**. Keep Athena and Claude Desktop running. A folder or project is optional.
+Add `use-athena/athena-marketplace` under **Customize > Plugins > Add > Add marketplace**, then install and enable **Imprint**. Keep Imprint and Claude Desktop running. Existing technical identifiers stay the same for compatibility.
 
-## Version 0.2.1
+## Version 0.2.2
 
-This update tells Claude to find deferred Athena tools before declaring them unavailable, and to record the user's actual request instead of a tool-loading notice. It was tested with Athena 0.1.3 (internal version 0.5.11).
+Renames the plugin to Imprint and includes the approved fingerprint artwork, matching the macOS icon. The plugin manifest, bundled desktop connector and MCP server supply the branding. Claude controls which icons appear on each surface; its local desktop-connector preview renders the fingerprint, while an uploaded-plugin card may retain a generic icon.
 
-Existing users: open **Customize > Plugins > Yours > Athena cowork (athena-marketplace)**, choose **... > Check for updates**, then click **Update**. Confirm the plugin shows **0.2.1**, then start a new Cowork task. If the details still show the old version just after updating, refresh Claude's page. This update flow was verified in Claude Desktop.
+Existing users: open your marketplace plugin under **Customize > Plugins > Yours**, choose **... > Check for updates**, then **Update**. Confirm version **0.2.2** and start a new session. Refresh Claude if the details still show the previous version. The old entry may be called **Athena cowork** until updated.
 
-Users who installed a ZIP manually need to replace that uploaded copy with the new ZIP or switch to the marketplace copy; updating the marketplace does not replace a separate upload. Keep only one Athena plugin copy enabled.
+A manually uploaded ZIP is a separate installation. Replace it with the new ZIP or switch to the marketplace copy, and keep only one copy enabled. Publishing a marketplace update does not force every client to refresh immediately.
 
-Plugin 0.1.9 used test port 4215 and cannot reach an Athena app using the normal port 4173. Versions 0.2.0 and 0.2.1 use 4173. Users still on 0.1.9 should update even if Claude shows the plugin as installed.
-
-Sonnet recorded ordinary tasks without an explicit Athena request in live tests, inside and outside a project with no folder selected. Capture still depends on Claude calling the tools; it is not guaranteed for every turn. See the [plugin documentation](plugins/athena-cowork/README.md) for the connection-check fallback and privacy details.
+The local connector was tested against daemon 0.5.18. All 57 connector tests pass. This release preserves the existing capture behavior and tool identifiers. Capture depends on Claude calling the tools and is not guaranteed for every turn. See the [plugin documentation](plugins/athena-cowork/README.md) for privacy details and the connection-check fallback.
