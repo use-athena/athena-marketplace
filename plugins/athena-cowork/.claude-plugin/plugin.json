@@ -1,6 +1,6 @@
 {
   "name": "athena-cowork",
-  "version": "0.2.2",
+  "version": "0.2.5",
   "description": "Local Cowork integration for the running Imprint daemon.",
   "author": {
     "name": "Imprint"

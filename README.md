@@ -1,8 +1,18 @@
 # Imprint plugin marketplace
 
-The Imprint plugin connects Claude to the Imprint app running on your Mac, using local port 4173. It works with or without a selected folder or project.
+The Imprint plugin connects Claude to the Imprint app running on your Mac, using local port 4173. Claude calls Imprint by itself in Cowork tasks with a folder (any folder). For tasks without one, Imprint's setup copies a line for your Claude preferences that asks Claude to call Imprint in every task.
 
 Add `use-athena/athena-marketplace` under **Customize > Plugins > Add > Add marketplace**, then install and enable **Imprint**. Keep Imprint and Claude Desktop running. Existing technical identifiers stay the same for compatibility.
+
+## Version 0.2.5
+
+Cowork without a folder. Cowork runs the plugin's hook, whose note asks Claude to call Imprint, only in tasks with a folder; in a task without one Claude did not call Imprint (checked live on October 17). The Imprint app's Cowork setup now has a third step that copies a line for Claude's preferences and opens Claude's settings, so every task calls Imprint. In this release:
+
+- `athena_capture_turn`'s description asks for one call per owner message, instead of only when the hook's note asks.
+- When the message asks for a draft, a capture also returns the owner's writing guide from Imprint (Imprint versions without it just return the usual notes).
+- The skill no longer says folderless tasks work by themselves.
+
+Existing users: **Customize > Plugins > Yours**, **... > Check for updates**, then **Update**, and start a new task. All 59 connector tests pass. Tool identifiers are unchanged.
 
 ## Version 0.2.2
 
