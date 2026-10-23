@@ -1,0 +1,12 @@
+{
+  "name": "imprint",
+  "version": "0.3.0",
+  "description": "Local Cowork integration for the running Imprint daemon.",
+  "author": {
+    "name": "Imprint"
+  },
+  "mcpServers": "./imprint.mcpb",
+  "displayName": "Imprint",
+  "icon": "./assets/icon.png",
+  "homepage": "https://imprintsystems.ai"
+}

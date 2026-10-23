@@ -8,10 +8,16 @@
   },
   "plugins": [
     {
+      "name": "imprint",
+      "displayName": "Imprint",
+      "source": "./plugins/imprint",
+      "description": "Lets Imprint learn from your Cowork tasks and bring back what it has learned."
+    },
+    {
       "name": "athena-cowork",
       "displayName": "Imprint",
       "source": "./plugins/athena-cowork",
-      "description": "Lets Imprint learn from your Cowork tasks and bring back what it has learned."
+      "description": "Imprint for Cowork set up before Imprint was renamed. New setups install the imprint plugin."
     }
   ]
 }

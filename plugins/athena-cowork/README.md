@@ -4,9 +4,9 @@ This package connects Cowork to the one Imprint daemon already running on the ho
 
 ## Install
 
-Install and start the current Imprint macOS app in `Applications`. Imprint's setup opens Claude's install dialog for this plugin from the public `use-athena/athena-marketplace` repository; choose **Install**. As a fallback, in Claude use **Customize > Plugins > Add > Upload plugin** and choose the supplied `athena-cowork.plugin.zip`. Cowork runs the plugin's hook, whose note asks Claude to call Imprint, only in tasks with a folder (any folder, inside or outside a project). For tasks without one, Imprint's setup copies a line for your Claude preferences that asks Claude to call Imprint in every task. Live-checked on October 17: without either, Claude did not call Imprint; with a folder or the preference, it did. Imprint’s tools may be deferred: the turn-capture note asks Claude to find them with ToolSearch before recording. If no event arrives, use the task’s + menu > Plugins > Imprint > athena, then ask Claude to check Imprint’s connection and follow the turn-capture instructions. In the October 5 live tests, Sonnet captured fresh no-folder tasks on the first turn; Haiku skipped some first turns, including one with Imprint’s skill selected, and needed an explicit connection check. Do not promise automatic recording in every task. A successful status check alone does not prove capture.
+Install and start the current Imprint macOS app in `Applications`. Imprint's setup opens Claude's install dialog for this plugin from the public `use-athena/athena-marketplace` repository; choose **Install**. As a fallback, in Claude use **Customize > Plugins > Add > Upload plugin** and choose the supplied `athena-cowork.plugin.zip`. Cowork runs the plugin's hook, whose note asks Claude to call Imprint, only in tasks with a folder (any folder, inside or outside a project). For tasks without one, Imprint's setup copies a line for your Claude preferences that asks Claude to call Imprint in every task. Live-checked on October 17: without either, Claude did not call Imprint; with a folder or the preference, it did. Imprint’s tools may be deferred: the turn-capture note asks Claude to find them with ToolSearch before recording. If no event arrives, use the task’s + menu > Plugins > Imprint and pick its skill, then ask Claude to check Imprint’s connection and follow the turn-capture instructions. In the October 5 live tests, Sonnet captured fresh no-folder tasks on the first turn; Haiku skipped some first turns, including one with Imprint’s skill selected, and needed an explicit connection check. Do not promise automatic recording in every task. A successful status check alone does not prove capture.
 
-Developers build the ZIP from `connectors/cowork` with `npm ci` and `npm run build`; `npm run build -- --marketplace-dir <dir>` also writes the marketplace repository layout to publish. Users install the ZIP bundled with the Imprint app without building it.
+Developers build the ZIPs from `connectors/cowork` with `npm ci` and `npm run build`; `npm run build -- --marketplace-dir <dir>` also writes the marketplace repository layout to publish. Users install the ZIP bundled with the Imprint app without building it.
 
 ## How capture works
 
@@ -23,8 +23,13 @@ Claude Desktop runs the MCPB server on the host with the system Node or its own,
 
 The plugin archive retains `LICENSES/DEPENDENCIES.md` notices for the bundled SDK, schema, and validation dependencies.
 
-## Brand assets and stable IDs
+## Brand assets and names
 
 The visible product name is Imprint; the lowercase italic logo and fingerprint are the same approved artwork as the app and website. `assets/logo.svg` is the full lockup; `assets/icon.png` is the connector icon. The plugin and MCPB declare these assets for clients that support them.
 
-Existing plugin, marketplace, skill, tool, environment and archive identifiers remain `athena` for connection compatibility. The marketplace install command remains `/plugin install athena-cowork --marketplace use-athena/athena-marketplace`; publishing this rebrand requires approval first.
+Imprint used to be called Athena. One source builds two plugins:
+
+- `imprint` (server `imprint`, skill `imprint`, tools named `imprint_`), which every new setup installs.
+- `athena-cowork` (server `athena-local`, skill `athena`, tools named `athena_`), for Cowork set up before the rename: the line its owner pasted into Claude's preferences names its tools, so Imprint's setup keeps offering it there until a guided switch. It is phased out once no install still uses it.
+
+The marketplace repository (`use-athena/athena-marketplace`) and the `ATHENA_PORT` and `ATHENA_INTERNAL` environment variables keep their names. Publishing a marketplace change requires approval first.

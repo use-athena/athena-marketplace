@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh \"${CLAUDE_PLUGIN_ROOT}/scripts/cloud-capture.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
