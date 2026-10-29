@@ -1,8 +1,8 @@
 # Imprint plugin marketplace
 
-The Imprint plugin connects Claude to the Imprint app running on your Mac, using local port 4173. Claude calls Imprint by itself in Cowork tasks with a folder (any folder). For tasks without one, Imprint's setup copies a line for your Claude preferences that asks Claude to call Imprint in every task.
+This marketplace is Imprint's old home. Imprint's Claude plugin now comes from [`imprintsystems/imprint`](https://github.com/imprintsystems/imprint). Both entries here are listed as **Imprint (old)** so they can't be mistaken for it in Claude.
 
-Imprint's setup opens Claude's install dialog for the `imprint` plugin. To add it by hand, add `use-athena/athena-marketplace` under **Customize > Plugins > Add > Add marketplace**, then install and enable `imprint`. Keep Imprint and Claude Desktop running.
+If you have either one installed, Imprint shows **Move to Imprint's new Claude plugin** on Home and in Settings > Connections: **Add to Claude** adds the new plugin, then **Open the old plugin** opens this one's page in Claude, where **…** > **Remove** takes it out. Both steps tick themselves off. Keep Imprint and Claude Desktop running.
 
 ## Version 0.3.0
 
